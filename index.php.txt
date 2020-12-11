@@ -1,0 +1,61 @@
+<?php
+
+//https://api.equiresults.com/v1/competitions/6665/classes.json
+
+//echo 'ciao';
+
+//$pars= array(
+//        'nome' => 'pippo',
+//        'cognome' => 'disney',
+//        'email' => 'pippo@paperino.com',
+//);
+
+//step1
+$curlSES=curl_init();
+//step2
+curl_setopt($curlSES,CURLOPT_URL,"https://api.equiresults.com/v1/competitions/6665/classes.json");
+curl_setopt($curlSES,CURLOPT_RETURNTRANSFER,true);
+curl_setopt($curlSES,CURLOPT_HEADER, false);
+//curl_setopt($curlSES, CURLOPT_POST, true);
+//curl_setopt($curlSES, CURLOPT_POSTFIELDS,$pars);
+curl_setopt($curlSES, CURLOPT_CONNECTTIMEOUT,10);
+curl_setopt($curlSES, CURLOPT_TIMEOUT,30);
+//step3
+$result=curl_exec($curlSES);
+//if($result) === false)
+//{
+//    echo "Errore: ". curl_error($curlSES)." - Codice errore: ".curl_errno($curlSES);
+//}
+//else
+//{
+    //step5
+    //$obj = json_decode($result);
+    //print $obj
+    $json = $result;
+    // var_dump( json_decode($json));
+    $array = json_decode($json, true);
+    //print $obj->{'foo-bar'};
+
+    foreach ($array as $k=>$v){
+        //echo $v['class_name'] . "\n\r"; // etc.
+        if ($v['is_visible'])
+        {
+            $is_visible = 'true';
+        }
+        echo "id " . $v['id'] . "is_visible " . $is_visible   . "\n\r";;
+    }
+
+    //foreach ($riga as json_decode($json)){
+    //foreach( $array )
+    //    //$v = _json_encode($v);
+    //    if ($assoc){
+    //        $k = '"'.addslashes($k).'"';
+    //        $v = $k.':'.$v;
+    //    }
+    //    $res[] = $v;
+   // }
+
+//}
+
+//step4
+curl_close($curlSES);
